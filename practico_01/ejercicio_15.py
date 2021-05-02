@@ -55,7 +55,11 @@ def medir_tiempo(func: Callable[[], int]) -> Tuple[int, float]:
     """
     start = perf_counter()
 
-    return (func(), perf_counter() - start)
+    function_result = func()
+
+    elapsed_time = perf_counter() - start
+
+    return function_result, elapsed_time
 
 
 # NO MODIFICAR - INICIO
@@ -233,13 +237,11 @@ if __name__ == "__main__":
     print()
 
     result, elapsed = calcular_posibilidades_recursiva(lista, limite)
-    print(
-        f"Tiempo: {elapsed:2.2f} segundos - Recursiva Memoized - 1ra Ejecución")
+    print(f"Tiempo: {elapsed:2.2f} segundos - Recursiva Memoized - 1ra Ejecución")
     assert result == 28671512
 
     result, elapsed = calcular_posibilidades_recursiva(lista, limite)
-    print(
-        f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - 2da Ejecución")
+    print(f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - 2da Ejecución")
     assert result == 28671512
 
     print()
@@ -249,8 +251,7 @@ if __name__ == "__main__":
     assert result == 68588312
 
     result, elapsed = calcular_posibilidades_recursiva(lista, limite + 1)
-    print(
-        f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro + 1")
+    print(f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro + 1")
     assert result == 68588312
 
     print()
@@ -260,8 +261,7 @@ if __name__ == "__main__":
     assert result == 108505112
 
     result, elapsed = calcular_posibilidades_recursiva(lista, limite + 2)
-    print(
-        f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro + 2")
+    print(f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro + 2")
     assert result == 108505112
 
     print()
@@ -271,8 +271,7 @@ if __name__ == "__main__":
     assert result == 8713112
 
     result, elapsed = calcular_posibilidades_recursiva(lista, limite - 1)
-    print(
-        f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro - 1")
+    print(f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro - 1")
     assert result == 8713112
 
     print()
@@ -282,7 +281,6 @@ if __name__ == "__main__":
     assert result == 2060312
 
     result, elapsed = calcular_posibilidades_recursiva(lista, limite - 2)
-    print(
-        f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro - 2")
+    print(f"Tiempo: {elapsed:2.8f} segundos - Recursiva Memoized - Parametro - 2")
     assert result == 2060312
 # NO MODIFICAR - FIN
