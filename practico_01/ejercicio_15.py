@@ -158,6 +158,7 @@ def memoized(func):
 
     return cache_func
 
+
 @medir_tiempo
 @memoized
 def calcular_posibilidades(lista: Sequence[int], limite: int) -> int:
@@ -206,6 +207,7 @@ def calcular_posibilidades_recursiva(lista: Sequence[int], limite: int) -> int:
     result = calcular_posibilidades_recursiva(lista, limite - 1)[0]
 
     return len([*permutations(lista, limite - 1)]) + result
+
 
 # NO MODIFICAR - INICIO
 if __name__ == "__main__":
