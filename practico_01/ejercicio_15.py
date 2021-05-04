@@ -15,6 +15,7 @@ Para poder utilizar un ejemplo real, se utilizará una función que calcula
 y cuenta las permutaciones (una operación costosa computacionalmente).
 """
 
+from functools import partial
 from itertools import permutations
 from time import perf_counter
 from typing import Callable, Sequence, Tuple
@@ -45,9 +46,6 @@ assert result == 28671512
 ###############################################################################
 
 
-from functools import partial
-
-
 def medir_tiempo(func: Callable[[], int]) -> Tuple[int, float]:
     """Toma una función y devuelve una dupla conteniendo en su primer elemento
     el resultado de la función y en su segundo elemento el tiempo de ejecución.
@@ -55,7 +53,13 @@ def medir_tiempo(func: Callable[[], int]) -> Tuple[int, float]:
     Restricción: La función no debe tomar parámetros y por lo tanto se
     recomienda usar partial.
     """
-    pass # Completar
+    start = perf_counter()
+
+    function_result = func()
+
+    elapsed_time = perf_counter() - start
+
+    return function_result, elapsed_time
 
 
 # NO MODIFICAR - INICIO
@@ -73,7 +77,12 @@ def medir_tiempo(func: Callable[[Sequence[int], int], int]) -> Callable[[Sequenc
     partial. En este caso se debe devolver una función que devuelva la tupla y
     tome una cantidad arbitraria de parámetros.
     """
-    pass # Completar
+    def measure_execution_time(*args, **kwargs):
+        start = perf_counter()
+
+        return (func(*args, *kwargs), perf_counter() - start)
+
+    return measure_execution_time
 
 
 # NO MODIFICAR - INICIO
@@ -95,6 +104,15 @@ Referencia: https://docs.python.org/3/glossary.html#term-decorator
 
 Este es un ejemplo y no hay que escribir código.
 """
+
+
+def medir_tiempo(function):
+    def measure_execution_time(*args, **kwargs):
+        start = perf_counter()
+
+        return (function(*args, *kwargs), perf_counter() - start)
+
+    return measure_execution_time
 
 
 # NO MODIFICAR - INICIO
@@ -127,7 +145,18 @@ def memoized(func):
     tiempo para la función calcular posibilidades. Prestar atención a los tiempo
     de ejecución
     """
-    pass # Completar
+
+    def cache_func(*args, **kwargs):
+        key = func.__name__ + str(args) + str(kwargs)
+
+        if not cache_func.cache.get(key):
+            cache_func.cache[key] = func(*args, *kwargs)
+
+        return cache_func.cache.get(key)
+
+    cache_func.cache = {}
+
+    return cache_func
 
 
 @medir_tiempo
@@ -171,7 +200,13 @@ sucesivas.
 @memoized
 def calcular_posibilidades_recursiva(lista: Sequence[int], limite: int) -> int:
     """Re-Escribir de manera recursiva"""
-    pass # Completar
+
+    if limite == 1:
+        return 1
+
+    result = calcular_posibilidades_recursiva(lista, limite - 1)[0]
+
+    return len([*permutations(lista, limite - 1)]) + result
 
 
 # NO MODIFICAR - INICIO

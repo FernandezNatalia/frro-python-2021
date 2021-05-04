@@ -7,7 +7,15 @@ def numeros_al_final_basico(lista: List[Union[float, str]]) -> List[Union[float,
     """Toma una lista de enteros y strings y devuelve una lista con todos los
     elementos numéricos al final.
     """
-    pass # Completar
+    count = 0
+    ordered = []
+    for i in lista:
+        if type(i) == int:
+            ordered.append(i)
+        else:
+            ordered.insert(count, i)
+            count += 1
+    return ordered
 
 
 # NO MODIFICAR - INICIO
@@ -20,7 +28,11 @@ assert numeros_al_final_basico([3, "a", 1, "b", 10, "j"]) == ["a", "b", "j", 3, 
 
 def numeros_al_final_comprension(lista: List[Union[float, str]]) -> List[Union[float, str]]:
     """Re-escribir utilizando comprensión de listas."""
-    pass # Completar
+
+    strings = [i for i in lista if type(i) != int]
+    numbers = [i for i in lista if type(i) == int]
+
+    return strings + numbers
 
 
 # NO MODIFICAR - INICIO
@@ -35,7 +47,7 @@ def numeros_al_final_sorted(lista: List[Union[float, str]]) -> List[Union[float,
     """Re-escribir utilizando la función sorted con una custom key.
     Referencia: https://docs.python.org/3/library/functions.html#sorted
     """
-    pass # Completar
+    return sorted(lista, key=lambda n: type(n) == int)
 
 
 # NO MODIFICAR - INICIO
@@ -50,7 +62,9 @@ def numeros_al_final_filter(lista: List[Union[float, str]]) -> List[Union[float,
     """CHALLENGE OPCIONAL - Re-escribir utilizando la función filter.
     Referencia: https://docs.python.org/3/library/functions.html#filter
     """
-    pass # Completar
+    strings = list(filter(lambda n: type(n) != int, lista))
+    numbers = list(filter(lambda n: n not in strings, lista))
+    return strings + numbers
 
 
 # NO MODIFICAR - INICIO
@@ -61,10 +75,17 @@ if __name__ == "__main__":
 
 ###############################################################################
 
-
 def numeros_al_final_recursivo(lista: List[Union[float, str]]) -> List[Union[float, str]]:
     """CHALLENGE OPCIONAL - Re-escribir de forma recursiva."""
-    pass # Completar
+
+    if all(type(i) == int for i in lista):
+        return lista
+
+    a, *b = lista
+    if type(a) == int:
+        b.append(a)
+        return numeros_al_final_recursivo(b)
+    return [a] + numeros_al_final_recursivo(b)
 
 
 # NO MODIFICAR - INICIO
