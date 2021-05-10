@@ -17,9 +17,15 @@ class Article:
     # NO MODIFICAR - FIN
 
     # Completar
+    def __str__(self) -> str:
+        return self.name
 
+    def __repr__(self) -> str:
+        return f"Article('{self.name}')"
 
 # NO MODIFICAR - INICIO
+
+
 class ShoppingCart:
     """Agregar los métodos que sean necesarios para que los test funcionen.
     Hint: los métodos necesarios son todos magic methods
@@ -50,9 +56,20 @@ class ShoppingCart:
     # NO MODIFICAR - FIN
 
     # Completar
+    def __str__(self) -> str:
+        return f"{[str(x) for x in self.articles]}"
 
+    def __repr__(self) -> str:
+        return f"ShoppingCart({[x for x in self.articles]})"        # Agrega automáticamente Article('') ???
+
+    def __eq__(self, other: ShoppingCart) -> bool:
+        return self.articles.sort(key=str) == other.articles.sort(key=str)
+
+    def __add__(self, other: ShoppingCart) -> ShoppingCart:
+        return ShoppingCart([self.articles + other.articles])
 
 # NO MODIFICAR - INICIO
+
 
 manzana = Article("Manzana")
 pera = Article("Pera")

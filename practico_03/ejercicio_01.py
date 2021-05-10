@@ -10,9 +10,18 @@ class Rectangulo:
     """
     # Completar
 
+    def __init__(self, base: int = None, altura: int = None) -> None:
+        self.base: int = base
+        self.altura: int = altura
+
+    def area(self) -> int:
+        if self.base is None or self.altura is None:
+            return 0
+
+        return self.base * self.altura
+
 
 # NO MODIFICAR - INICIO
-
 # Test Constructor
 rec = Rectangulo(10, 10)
 assert rec.base == 10
