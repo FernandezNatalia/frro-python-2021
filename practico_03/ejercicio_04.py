@@ -2,6 +2,9 @@
 
 
 # NO MODIFICAR - INICIO
+from dataclasses import dataclass
+
+
 class Animal:
     def __init__(self, edad: int = 0):
         self.edad = edad
@@ -19,6 +22,13 @@ class Perro(Animal):
     """
     # Completar
 
+    def __init__(self, raza: str = "", *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.raza: str = raza
+
+    def descripcion(self) -> str:
+        return f"Soy un perro y {super().descripcion().lower()}"
+
 
 # NO MODIFICAR - INICIO
 terrier = Perro(edad=8, raza="Yorkshire Terrier")
@@ -34,17 +44,23 @@ assert cachorro.descripcion() == "Soy un perro y tengo 1 años"
 
 """Re-Escribir utilizando DataClasses"""
 
-from dataclasses import dataclass
-
 
 @dataclass
 class Animal:
-    pass # Completar
+    # Completar
+    edad: int = 0
+
+    def descripcion(self) -> str:
+        return f"Tengo {self.edad} años"
 
 
 @dataclass
 class Perro(Animal):
-    pass # Completar
+    # Completar
+    raza: str = ""
+
+    def descripcion(self) -> str:
+        return f"Soy un perro y {super().descripcion().lower()}"
 
 
 # NO MODIFICAR - INICIO
